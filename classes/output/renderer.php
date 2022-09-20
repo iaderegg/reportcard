@@ -94,7 +94,6 @@ class renderer extends plugin_renderer_base {
 
         $table = new html_table();
         $table->head  = array(
-            get_string('course_shortname', 'report_reportcard'),
             get_string('course_fullname', 'report_reportcard'),
             get_string('grade', 'report_reportcard'));
         $table->id = 'report-card-courses-table';
@@ -115,7 +114,6 @@ class renderer extends plugin_renderer_base {
             }
 
             $coursetoprint = new stdClass();
-            $coursetoprint->shortname = $htmlwriter->link($url, $courseraw->shortname, array('target' => '_blank'));
             $coursetoprint->fullname = $htmlwriter->link($url, $courseraw->fullname, array('target' => '_blank'));
             $coursetoprint->finalgrade = $finalgrade;
 
