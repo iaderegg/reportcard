@@ -26,6 +26,9 @@ namespace report_reportcard\output;
 
 defined('MOODLE_INTERNAL') || die();
 
+require_once($CFG->libdir.'/gradelib.php');
+require_once($CFG->dirroot.'/grade/querylib.php');
+
 use plugin_renderer_base;
 use report_reportcard\user_manager;
 use report_reportcard\user;
@@ -105,9 +108,16 @@ class renderer extends plugin_renderer_base {
         foreach ($coursesraw as $courseraw) {
             $url = new moodle_url('/course/view.php', array('id' => $courseraw->id));
 
+            $finalgrade = grade_get_course_grade($userid, $courseraw->id)->str_grade;
+
+            if (!$finalgrade) {
+                $finalgrade = get_string('no_grade', 'report_reportcard');
+            }
+
             $coursetoprint = new stdClass();
-            $coursetoprint->shortname = $courseraw->shortname;
-            $coursetoprint->fullname = $courseraw->fullname;
+            $coursetoprint->shortname = $htmlwriter->link($url, $courseraw->shortname, array('target' => '_blank'));
+            $coursetoprint->fullname = $htmlwriter->link($url, $courseraw->fullname, array('target' => '_blank'));
+            $coursetoprint->finalgrade = $finalgrade;
 
             array_push($coursestoprint, $coursetoprint);
         }

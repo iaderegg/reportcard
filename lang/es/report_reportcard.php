@@ -31,3 +31,4 @@ $string['reportcard:viewreport'] = 'Ver reporte';
 $string['grade'] = 'Calificación';
 $string['course_shortname'] = 'Nombre corto del curso';
 $string['course_fullname'] = 'Nombre largo del curso';
+$string['no_grade'] = 'Sin calificación';
