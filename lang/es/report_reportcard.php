@@ -26,3 +26,8 @@ $string['pluginname'] = 'Boletín de calificaciones';
 
 // Capabilities.
 $string['reportcard:viewreport'] = 'Ver reporte';
+
+// User report.
+$string['grade'] = 'Calificación';
+$string['course_shortname'] = 'Nombre corto del curso';
+$string['course_fullname'] = 'Nombre largo del curso';

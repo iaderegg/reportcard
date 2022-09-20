@@ -34,11 +34,24 @@ $context = context_system::instance();
 
 require_capability('report/reportcard:viewreport', $context);
 
+$userid = required_param('id', PARAM_INT);
+
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/report/reportcard/index.php'));
 $PAGE->set_pagelayout('admin');
 $PAGE->set_title($SITE->fullname);
 $PAGE->set_heading(get_string('pluginname', 'report_reportcard'));
 
+$user = $DB->get_record('user', array('id' => $userid));
+
+$rendererplugin = $PAGE->get_renderer('report_reportcard');
+
+$data = new stdClass();
+$data->photo = $OUTPUT->user_picture($user, array('size' => 1, 'class' => 'userpicture'));
+$data->firstname = $user->firstname;
+$data->lastname = $user->lastname;
+$data->coursestable = $rendererplugin->render_user_courses_table($user->id);
+
 echo $OUTPUT->header();
+echo $OUTPUT->render_from_template('report_reportcard/user', $data);
 echo $OUTPUT->footer();

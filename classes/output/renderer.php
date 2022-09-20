@@ -28,9 +28,11 @@ defined('MOODLE_INTERNAL') || die();
 
 use plugin_renderer_base;
 use report_reportcard\user_manager;
+use report_reportcard\user;
 use html_table;
 use html_writer;
 use moodle_url;
+use stdClass;
 
 /**
  * Plugin renderer.
@@ -75,6 +77,44 @@ class renderer extends plugin_renderer_base {
         $table->data = $users;
 
         return html_writer::table($table);
+    }
+
+    /**
+     * Returns HTML courses table.
+     *
+     * @return string $htmltable
+     */
+    public function render_user_courses_table($userid) {
+
+        $usermanager = new user();
+        $htmlwriter = new html_writer();
+
+        $table = new html_table();
+        $table->head  = array(
+            get_string('course_shortname', 'report_reportcard'),
+            get_string('course_fullname', 'report_reportcard'),
+            get_string('grade', 'report_reportcard'));
+        $table->id = 'report-card-courses-table';
+        $table->colclasses = array('mdl-left', 'mdl-left', 'mdl-align');
+        $table->data  = array();
+        $table->attributes['class'] = 'table table-striped';
+
+        $coursesraw = $usermanager->get_student_courses($userid);
+        $coursestoprint = array();
+
+        foreach ($coursesraw as $courseraw) {
+            $url = new moodle_url('/course/view.php', array('id' => $courseraw->id));
+
+            $coursetoprint = new stdClass();
+            $coursetoprint->shortname = $courseraw->shortname;
+            $coursetoprint->fullname = $courseraw->fullname;
+
+            array_push($coursestoprint, $coursetoprint);
+        }
+
+        $table->data = $coursestoprint;
+
+        return $htmlwriter->table($table);
     }
 
 }

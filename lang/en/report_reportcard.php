@@ -26,3 +26,8 @@ $string['pluginname'] = 'Report card';
 
 // Capabilities.
 $string['reportcard:viewreport'] = 'View report';
+
+// User report.
+$string['grade'] = 'Grade';
+$string['course_shortname'] = 'Course shortname';
+$string['course_fullname'] = 'Course fullname';
