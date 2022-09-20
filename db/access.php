@@ -34,4 +34,14 @@ $capabilities = [
             'teacher' => CAP_ALLOW
         ],
     ],
+    'report/reportcard:view_own_report' => [
+        'riskbitmask' => RISK_PERSONAL | RISK_DATALOSS,
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => [
+            'manager' => CAP_ALLOW,
+            'teacher' => CAP_ALLOW,
+            'user' => CAP_ALLOW
+        ],
+    ],
 ];

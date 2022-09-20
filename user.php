@@ -32,9 +32,13 @@ if (isguestuser()) {
 
 $context = context_system::instance();
 
-require_capability('report/reportcard:viewreport', $context);
+require_capability('report/reportcard:view_own_report', $context);
 
-$userid = required_param('id', PARAM_INT);
+if (is_siteadmin($USER->id)) {
+    $userid = required_param('id', PARAM_INT);
+} else {
+    $userid = $USER->id;
+}
 
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/report/reportcard/index.php'));
